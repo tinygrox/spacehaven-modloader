@@ -354,6 +354,7 @@ class JarMod(Mod):
             f = open(self.path + "/../../config.json","r", encoding='utf-8')
             jsonObj = json.load(f)
             classPath = jsonObj["classPath"]
+            vmArgs = jsonObj["vmArgs"]
             
             # aspectj is required for .jar mods
             if "aspectjweaver-1.9.19.jar" not in classPath:
@@ -363,7 +364,17 @@ class JarMod(Mod):
 
             if self.classPathName not in classPath:
                 classPath.insert(2, self.classPathName)
-                jsonObj["classPath"] = classPath
+
+            jsonObj["classPath"] = classPath
+                
+            if "-javaagent:./aspectjweaver-1.9.19.jar" not in vmArgs:
+                    vmArgs.insert(0, "-javaagent:./aspectjweaver-1.9.19.jar")
+            if "-XstartOnFirstThread" not in vmArgs:
+                    vmArgs.insert(0, "-XstartOnFirstThread")
+            if "--add-opens java.base/java.lang=ALL-UNNAMED" not in vmArgs:
+                    vmArgs.insert(0, "--add-opens java.base/java.lang=ALL-UNNAMED")
+
+            jsonObj["vmArgs"] = vmArgs
 
             f.close()
             open(self.path + "/../../config.json", 'w').close() # erase file
