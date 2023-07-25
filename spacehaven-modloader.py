@@ -5,7 +5,7 @@ import platform
 import subprocess
 import threading
 import traceback
-import winreg
+#import winreg
 from collections import OrderedDict
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk, font, scrolledtext
@@ -205,38 +205,38 @@ class Window(Frame):
             ui.log.log("Unable to get last space haven location. Autolocating again.")
 
         # Steam based locator (Windows)
-        try:
-            registry_path:str = "SOFTWARE\\WOW6432Node\\Valve\\Steam" if (platform.architecture()[0] == "64bit") else "SOFTWARE\\Valve\\Steam"
-            steam_path:str = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, registry_path), "InstallPath")[0]
-            spacehaven_exe:str = r"\steamapps\common\SpaceHaven\spacehaven.exe"
+        #try:
+            #registry_path:str = "SOFTWARE\\WOW6432Node\\Valve\\Steam" if (platform.architecture()[0] == "64bit") else "SOFTWARE\\Valve\\Steam"
+            #steam_path:str = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, registry_path), "InstallPath")[0]
+            #spacehaven_exe:str = r"\steamapps\common\SpaceHaven\spacehaven.exe"
 
-            ''' DEPRECATED
-            library_folders = acf.load(open(steam_path + "\\steamapps\\libraryfolders.vdf"), wrapper=OrderedDict)
-            locations = [steam_path + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe"]
-            for key, value in library_folders["LibraryFolders"].items():
-                if str.isnumeric(key): locations.append(value + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe")
-            for location in locations:
-                if os.path.exists(location):
-                    self.locateSpacehaven(location)
-                    return
-            '''
+            #''' DEPRECATED
+            #library_folders = acf.load(open(steam_path + "\\steamapps\\libraryfolders.vdf"), wrapper=OrderedDict)
+            #locations = [steam_path + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe"]
+            #for key, value in library_folders["LibraryFolders"].items():
+                #if str.isnumeric(key): locations.append(value + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe")
+            #for location in locations:
+                #if os.path.exists(location):
+                    #self.locateSpacehaven(location)
+                    #return
+            #'''
 
-            def vdf_path_parse(libfile):
-                filestring:str = open(steam_path + r"\steamapps\libraryfolders.vdf").read()
-                paths = re.findall(r'\s*\"path\"\s*\"([^\"]*)', filestring)                      
-                return paths
+            #def vdf_path_parse(libfile):
+                #filestring:str = open(steam_path + r"\steamapps\libraryfolders.vdf").read()
+                #paths = re.findall(r'\s*\"path\"\s*\"([^\"]*)', filestring)                      
+                #return paths
 
-            library_folders = vdf_path_parse(open(steam_path + r"\steamapps\libraryfolders.vdf"))
-            locations = [steam_path + spacehaven_exe]
-            for value in library_folders:
-                locations.append( value.replace( "\\\\" , "\\" ) + spacehaven_exe)
-            for location in locations:
-                if os.path.exists(location):
-                    self.locateSpacehaven(location)
-                    return
+            #library_folders = vdf_path_parse(open(steam_path + r"\steamapps\libraryfolders.vdf"))
+            #locations = [steam_path + spacehaven_exe]
+            #for value in library_folders:
+                #locations.append( value.replace( "\\\\" , "\\" ) + spacehaven_exe)
+            #for location in locations:
+                #if os.path.exists(location):
+                    #self.locateSpacehaven(location)
+                    #return
 
-        except FileNotFoundError:
-            ui.log.log("Unable to locate Steam registry keys or library paths, aborting Steam autolocator")
+        #except FileNotFoundError:
+            #ui.log.log("Unable to locate Steam registry keys or library paths, aborting Steam autolocator")
 
         for location in POSSIBLE_SPACEHAVEN_LOCATIONS:
             try: 
@@ -661,7 +661,7 @@ def handleException(type, value, trace):
     ui.log.log(message)
 
     messagebox.showerror("Error", "Sorry, something went wrong!\n\n"
-                                  "Please open an issue at https://github.com/anatarist/spacehaven-modloader and attach logs.txt from your mods/ folder.")
+                                  "Please open an issue at https://github.com/CyanBlob/spacehaven-modloader and attach logs.txt from your mods/ folder.")
 
 
 if __name__ == "__main__":
