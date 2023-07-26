@@ -7,6 +7,7 @@ import version
 # Dependencies are automatically detected, but it might need fine tuning.
 build_exe_options = {
     "packages": ["six", "pkg_resources._vendor"], 
+    "includes": ["vdf"], 
     "excludes": [],
     'include_files' : ['textures_annotations.xml', ],
     }
