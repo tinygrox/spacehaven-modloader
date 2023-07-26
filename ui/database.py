@@ -190,6 +190,11 @@ class Mod:
         
         # TODO add a flag to warn users about savegame compatibility ?
         self.name = os.path.basename(self.path)
+        self.version = ""
+        self.author = ""
+        self.website = ""
+        self.updates = ""
+        self.prefix = ""
         self.gameInfo = gameInfo
         self._mappedIDs = []
         self.enabled = not os.path.isfile(os.path.join(self.path, DISABLED_MARKER))
@@ -197,12 +202,6 @@ class Mod:
         self.info_file = info_file
         self.loadInfo(info_file)
         self.known_issues = ""
-        self.version = ""
-        self.author = ""
-        self.website = ""
-        self.updates = ""
-        self.prefix = ""
-        
 
     def loadInfo(self, infoFile):
         

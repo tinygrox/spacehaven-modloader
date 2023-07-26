@@ -21,6 +21,7 @@ import ui.launcher
 import ui.log
 import version
 from ui.scrolledlistbox import ScrolledListbox
+from ui.database import JarMod
 
 POSSIBLE_SPACEHAVEN_LOCATIONS = [
     # MacOS
@@ -362,7 +363,7 @@ class Window(Frame):
         
         mod_idx = 0
         for mod in DatabaseHandler.getRegisteredMods():
-            self.modList.insert(END, mod.name)
+            self.modList.insert(END, mod.title())
             mod.display_idx = mod_idx
             
             self.update_list_style(mod)
