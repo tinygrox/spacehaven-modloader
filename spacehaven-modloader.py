@@ -5,12 +5,8 @@ import platform
 import subprocess
 import threading
 import traceback
-<<<<<<< HEAD
-#import winreg
-=======
 import vdf
 from pathlib import Path
->>>>>>> cca4eb524708c00f9b237ce6a3965708218867d1
 from collections import OrderedDict
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk, font, scrolledtext
@@ -234,8 +230,8 @@ class Window(Frame):
                 
                 self.locateSpacehaven(str(Path(value["path"], "steamapps", "common", "SpaceHaven", game_executable)))
 
-        #except FileNotFoundError:
-            #ui.log.log("Unable to locate Steam registry keys or library paths, aborting Steam autolocator")
+        except FileNotFoundError:
+            ui.log.log("Unable to locate Steam registry keys or library paths, aborting Steam autolocator")
 
         # Brute force method
         for location in POSSIBLE_SPACEHAVEN_LOCATIONS:

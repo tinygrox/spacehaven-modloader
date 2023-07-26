@@ -60,9 +60,7 @@ class ModDatabase:
 
                 if isJarMod:
                     newMod = JarMod(info_file, self.gameInfo, jarModFileName)
-                    print("FOUND JAR MOD: " + jarModFileName)
                     if newMod.enabled:
-                        print("ENABLE JAR MOD: " + jarModFileName)
                         newMod.enable() # this has to be called in order to update config.json
                 else:
                     newMod = Mod(info_file, self.gameInfo)
