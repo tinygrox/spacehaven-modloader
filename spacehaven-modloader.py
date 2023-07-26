@@ -629,6 +629,16 @@ class Window(Frame):
         #activeModPaths = [mod.path for mod in DatabaseHandler.getActiveMods()]
 
         activeMods = DatabaseHandler.getActiveMods()
+        xmlMods = []
+
+        print(activeMods)
+        print(type(activeMods))
+
+        for mod in activeMods:
+            if isinstance(mod, JarMod):
+                continue
+            else:
+                xmlMods.append(mod)
 
         # If any active mods have variables, save them.
         for mod in activeMods:
@@ -638,7 +648,7 @@ class Window(Frame):
 
         
         try:
-            loader.load.load(self.jarPath, activeMods, self.current_mods_signature())
+            loader.load.load(self.jarPath, xmlMods, self.current_mods_signature())
             ui.launcher.launchAndWait(self.gamePath)
             loader.load.unload(self.jarPath)
         except Exception as ex:

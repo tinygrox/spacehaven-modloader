@@ -52,6 +52,7 @@ class ModDatabase:
                 
                 isJarMod = False
                 jarModFileName = ""
+                jarModDisabled = False
                 for file in os.listdir(modPath):
                     if file.endswith(".jar"):
                         isJarMod = True
@@ -59,6 +60,10 @@ class ModDatabase:
 
                 if isJarMod:
                     newMod = JarMod(info_file, self.gameInfo, jarModFileName)
+                    print("FOUND JAR MOD: " + jarModFileName)
+                    if newMod.enabled:
+                        print("ENABLE JAR MOD: " + jarModFileName)
+                        newMod.enable() # this has to be called in order to update config.json
                 else:
                     newMod = Mod(info_file, self.gameInfo)
                 if newMod.prefix:
@@ -350,7 +355,10 @@ class JarMod(Mod):
     def enable(self):
         try:
             os.unlink(os.path.join(self.path, DISABLED_MARKER))
+        except:
+            pass
 
+        try:
             f = open(self.path + "/../../config.json","r", encoding='utf-8')
             jsonObj = json.load(f)
             classPath = jsonObj["classPath"]
