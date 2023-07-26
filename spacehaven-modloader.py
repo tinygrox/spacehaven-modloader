@@ -5,7 +5,12 @@ import platform
 import subprocess
 import threading
 import traceback
+<<<<<<< HEAD
 #import winreg
+=======
+import vdf
+from pathlib import Path
+>>>>>>> cca4eb524708c00f9b237ce6a3965708218867d1
 from collections import OrderedDict
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk, font, scrolledtext
@@ -204,40 +209,35 @@ class Window(Frame):
         except FileNotFoundError:
             ui.log.log("Unable to get last space haven location. Autolocating again.")
 
-        # Steam based locator (Windows)
-        #try:
-            #registry_path:str = "SOFTWARE\\WOW6432Node\\Valve\\Steam" if (platform.architecture()[0] == "64bit") else "SOFTWARE\\Valve\\Steam"
-            #steam_path:str = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, registry_path), "InstallPath")[0]
-            #spacehaven_exe:str = r"\steamapps\common\SpaceHaven\spacehaven.exe"
+        # Find steam install location automagically
+        try:
+            steam_path = ""
+            game_executable = "spacehaven"
+            if platform.system() == "Windows":
+                # ONLY import winreg IF we are doing windows
+                import winreg
+                registry_path = "SOFTWARE\\WOW6432Node\\Valve\\Steam" if (platform.architecture()[0] == "64bit") else "SOFTWARE\\Valve\\Steam"
+                steam_path = winreg.QueryValueEx(winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, registry_path), "InstallPath")[0]
+                game_executable += ".exe"
+            if platform.system() == "Linux":
+                steam_path = Path(Path.home(), ".steam", "steam")
+            if platform.system() == "Darwin":
+                steam_path = Path(Path.home(), "Library", "Application Support", "Steam")
 
-            #''' DEPRECATED
-            #library_folders = acf.load(open(steam_path + "\\steamapps\\libraryfolders.vdf"), wrapper=OrderedDict)
-            #locations = [steam_path + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe"]
-            #for key, value in library_folders["LibraryFolders"].items():
-                #if str.isnumeric(key): locations.append(value + "\\steamapps\\common\\SpaceHaven\\spacehaven.exe")
-            #for location in locations:
-                #if os.path.exists(location):
-                    #self.locateSpacehaven(location)
-                    #return
-            #'''
-
-            #def vdf_path_parse(libfile):
-                #filestring:str = open(steam_path + r"\steamapps\libraryfolders.vdf").read()
-                #paths = re.findall(r'\s*\"path\"\s*\"([^\"]*)', filestring)                      
-                #return paths
-
-            #library_folders = vdf_path_parse(open(steam_path + r"\steamapps\libraryfolders.vdf"))
-            #locations = [steam_path + spacehaven_exe]
-            #for value in library_folders:
-                #locations.append( value.replace( "\\\\" , "\\" ) + spacehaven_exe)
-            #for location in locations:
-                #if os.path.exists(location):
-                    #self.locateSpacehaven(location)
-                    #return
+            libraryfolders_vdf = vdf.parse(open(str(Path(steam_path, "steamapps", "libraryfolders.vdf"))))["libraryfolders"]
+            for key in libraryfolders_vdf:
+                value = libraryfolders_vdf[key]
+                ui.log.log(str(value))
+                # let's see if the game is on the dir
+                if not value["apps"].get("979110"):
+                    continue
+                
+                self.locateSpacehaven(str(Path(value["path"], "steamapps", "common", "SpaceHaven", game_executable)))
 
         #except FileNotFoundError:
             #ui.log.log("Unable to locate Steam registry keys or library paths, aborting Steam autolocator")
 
+        # Brute force method
         for location in POSSIBLE_SPACEHAVEN_LOCATIONS:
             try: 
                 location = os.path.abspath(location)
