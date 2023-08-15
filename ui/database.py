@@ -11,6 +11,8 @@ import version
 
 import ui.gameinfo
 import ui.log
+import shutil
+
 
 import tkinter as tk
 
@@ -27,6 +29,7 @@ class ModDatabase:
         ModDatabase.__lastInstance = self
 
     def locateMods(self):
+
         self.mods = []
         ModDatabase.Prefixes = {}
 
@@ -363,6 +366,9 @@ class JarMod(Mod):
             os.unlink(os.path.join(self.path, DISABLED_MARKER))
         except:
             pass
+
+        shutil.copyfile("aspectj-1.9.19.jar", self.path + "/../../aspectj-1.9.19.jar")
+        shutil.copyfile("aspectjweaver-1.9.19.jar", self.path + "/../../aspectjweaver-1.9.19.jar")
 
         try:
             f = open(self.path + "/../../config.json","r", encoding='utf-8')

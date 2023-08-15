@@ -9,7 +9,7 @@ build_exe_options = {
     "packages": ["six", "pkg_resources._vendor"], 
     "includes": ["vdf"], 
     "excludes": [],
-    'include_files' : ['textures_annotations.xml', ],
+    'include_files' : ['textures_annotations.xml', 'aspectj-1.9.19.jar', 'aspectjweaver-1.9.19.jar'],
     }
 
 # GUI applications require a different base on Windows (the default is for a
