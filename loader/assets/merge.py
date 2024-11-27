@@ -240,7 +240,8 @@ def buildLibrary(location: str, mod: str):
             if target not in location_library:  location_library[target] = []
 
             ui.log.log("    {} <= {}".format(target, mod_file))
-            with open(_mod_path(mod_file)) as f:
+            # with open(_mod_path(mod_file), encoding='utf-8') as f:
+            with open(_mod_path(mod_file), "rb") as f:
                 location_library[target].append(lxml.etree.parse(f, parser=lxml.etree.XMLParser(remove_comments=True)))
 
         mod_file = _mod_path(target)
