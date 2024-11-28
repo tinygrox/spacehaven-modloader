@@ -291,7 +291,10 @@ def mods(corePath, activeMods, modPaths):
     # Write out the new base library
     for filename in PATCHABLE_XML_FILES:
         with open(_core_path(filename), "wb") as f:
-            f.write(lxml.etree.tostring(coreLibrary[filename], pretty_print=True, encoding="UTF-8"))
+            xml_bytes:str = lxml.etree.tostring(coreLibrary[filename], pretty_print=True, encoding="UTF-8")
+            for entity, replacement in entity_map.items():
+                xml_bytes = xml_bytes.replace(entity, replacement)
+            f.write(xml_bytes)
 
     ui.log.updateLaunchState("Packing textures")
     # add or overwrite textures from mods. This is done after all the XML has been merged into the core "textures" file
