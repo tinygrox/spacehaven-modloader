@@ -14,6 +14,14 @@ from .explode import Texture
 from .library import PATCHABLE_CIM_FILES, PATCHABLE_XML_FILES
 from .patch import doPatches
 
+entity_map = {
+    b"&amp;": b"&",
+    b"&lt;": b"<",
+    b"&gt;": b">",
+    b"&quot;": b"\"",
+    b"&apos;": b"'",
+    b"&nbsp;": b" "
+}
 
 def _detect_textures(coreLibrary, modLibrary, mod):
     textures_path = os.path.join(mod, 'textures')
