@@ -28,7 +28,7 @@ def annotate(corePath):
         assetPos.set('_annotation', texture_names[asset_id])
     
     annotatedPath = os.path.join(corePath, "library", "animations_annotated.xml")
-    animations.write(annotatedPath)
+    animations.write(annotatedPath, "UTF-8")
     ui.log.log("  Wrote annotated annimations to {}".format(annotatedPath))
     
     haven = ElementTree.parse(os.path.join(corePath, "library", "haven"), parser=XMLParser(recover=True))
@@ -37,7 +37,8 @@ def annotate(corePath):
     tids = {}
     # Load texts
     for text in texts.getroot():
-        tids[text.get("id")] = text.find("EN").text
+        # tids[text.get("id")] = text.find("EN").text
+        tids[text.get("id")] = text.find("CN").text if text.find("CN") is not None else text.find("EN").text
     
     def nameOf(element):
         name = element.find("name")
@@ -81,7 +82,7 @@ def annotate(corePath):
 
     # Write the partially annotated haven file, in case something goes wrong later.
     annotatedHavenPath = os.path.join(corePath, "library", "haven_annotated.xml")
-    haven.write(annotatedHavenPath)
+    haven.write(annotatedHavenPath, "UTF-8")
 
 
     ##############################################################################################
@@ -279,8 +280,9 @@ def annotate(corePath):
                       l.set("_annotation", gfilename[fid])
                       if lang=="EN":
                           fragment.set("_annotation", gfilename[fid])
+                          
 
 
     annotatedHavenPath = os.path.join(corePath, "library", "haven_annotated.xml")
-    haven.write(annotatedHavenPath)
+    haven.write(annotatedHavenPath, "UTF-8")
     ui.log.log("  Wrote annotated spacehaven library to {}".format(annotatedHavenPath))

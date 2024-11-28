@@ -271,7 +271,7 @@ class Mod:
                         v[0].set("value",str(var.value))
 
             # config_xml is a section of info_xml
-            self.info_xml.write(self.info_file)
+            self.info_xml.write(self.info_file, "UTF-8")
 
 
     def enable(self):

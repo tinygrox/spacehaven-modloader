@@ -26,5 +26,5 @@ setup(
     name="spacehaven-modloader",
     version=version.version,
     options={"build_exe": build_exe_options},
-    executables=[Executable("spacehaven-modloader.py", base=base)],
+    executables=[Executable("spacehaven-modloader.py", base=base, target_name="spacehaven.exe")],
 )

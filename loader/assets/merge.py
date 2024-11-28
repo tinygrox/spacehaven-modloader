@@ -279,7 +279,8 @@ def mods(corePath, activeMods, modPaths):
 
     # Merge in modded files
     for mod in modPaths:
-        ui.log.updateLaunchState("Installing {}".format(os.path.basename(mod)))
+        # ui.log.updateLaunchState("Installing {}".format(os.path.basename(mod)))
+        ui.log.updateLaunchState("正在安装 {}".format(os.path.basename(mod)))
 
         ui.log.log("  Loading mod {}...".format(mod))
 
@@ -289,12 +290,14 @@ def mods(corePath, activeMods, modPaths):
 
     # Do patches after merges to avoid clobbers
     for mod in activeMods:
-        ui.log.updateLaunchState(f"Patching {os.path.basename(mod.path)}")
+        # ui.log.updateLaunchState(f"Patching {os.path.basename(mod.path)}")
+        ui.log.updateLaunchState(f"正在修补 {os.path.basename(mod.path)}")
         ui.log.log(f"  Loading patches {mod.path}...")
         modPatchesLibrary = buildLibrary('patches', mod.path)
         doPatches(coreLibrary, modPatchesLibrary, mod)
 
-    ui.log.updateLaunchState("Updating XML")
+    # ui.log.updateLaunchState("Updating XML")
+    ui.log.updateLaunchState("正在更新XML")
 
     # Write out the new base library
     for filename in PATCHABLE_XML_FILES:
@@ -304,7 +307,8 @@ def mods(corePath, activeMods, modPaths):
                 xml_bytes = xml_bytes.replace(entity, replacement)
             f.write(xml_bytes)
 
-    ui.log.updateLaunchState("Packing textures")
+    # ui.log.updateLaunchState("Packing textures")
+    ui.log.updateLaunchState("正在打包贴图")
     # add or overwrite textures from mods. This is done after all the XML has been merged into the core "textures" file
     cims = {}
     reexport_cims = {}

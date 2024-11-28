@@ -479,7 +479,8 @@ class Window(Frame):
 
         # Reset button at top.
         resetFrame = Frame(self.modConfigFrame.scrollable_frame)
-        resetButton = Button(resetFrame, text="Reset to Defaults", anchor=NE, command=self.reset_ModConfigVariables)
+        # resetButton = Button(resetFrame, text="Reset to Defaults", anchor=NE, command=self.reset_ModConfigVariables)
+        resetButton = Button(resetFrame, text="重置为默认", anchor=NE, command=self.reset_ModConfigVariables)
         resetButton.pack(side = RIGHT, padx=4, pady=4)
         resetFrame.pack(fill=X)
 
@@ -492,7 +493,8 @@ class Window(Frame):
 
     def showMod(self, mod:ui.database.Mod):
         if not mod:
-            return self.showModError("No mods found", "Please install some mods into your mods folder.")
+            # return self.showModError("No mods found", "Please install some mods into your mods folder.")
+            return self.showModError("没有找到任何Mod", "请先安装一些Mod到mods文件内")
         
         title = mod.title()
         if mod.enabled:
