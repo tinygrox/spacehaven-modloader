@@ -8,7 +8,8 @@ import ui.log
 
 def launchAndWait(path):
     """Launch the game and wait for it to exit"""
-    ui.log.updateBackgroundState("Running")
+    # ui.log.updateBackgroundState("Running")
+    ui.log.updateBackgroundState("正在运行")
     
     # FIXME cloud credentials aren't found when launching from the modloader. 
     # cwd issue ?? apparently not as the cwd doesnt change anything...

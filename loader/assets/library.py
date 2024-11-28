@@ -17,7 +17,8 @@ PATCHABLE_CIM_FILES = ["library/%d.cim" % i for i in range(24)]
 
 def extract(jarPath, corePath):
     """Extract library files from spacehaven.jar"""
-    ui.log.updateBackgroundState("Extracting game files")
+    # ui.log.updateBackgroundState("Extracting game files")
+    ui.log.updateBackgroundState("正在提取游戏文件")
 
     if not os.path.exists(corePath):
         os.mkdir(corePath)
@@ -36,7 +37,8 @@ def patch(jarPath, corePath, resultPath, extra_assets = None):
     original = ZipFile(jarPath, "r")
     patched = ZipFile(resultPath, "w")
     
-    ui.log.updateBackgroundState("Merging vanilla files")
+    # ui.log.updateBackgroundState("Merging vanilla files")
+    ui.log.updateBackgroundState("正在合并原版文件")
     
     update_files = PATCHABLE_XML_FILES + PATCHABLE_CIM_FILES
     for file in set(original.namelist()):
@@ -45,7 +47,8 @@ def patch(jarPath, corePath, resultPath, extra_assets = None):
     
     original.close()
     
-    ui.log.updateBackgroundState("Merging modded files")
+    # ui.log.updateBackgroundState("Merging modded files")
+    ui.log.updateBackgroundState("正在合并已Mod的文件")
     
     if extra_assets:
         update_files += extra_assets

@@ -134,7 +134,8 @@ def explode(corePath):
 
         if not page in cims:
             cim_filename = '{}.cim'.format(page)
-            ui.log.updateBackgroundState("Unpacking textures ({})".format(cim_filename))
+            # ui.log.updateBackgroundState("Unpacking textures ({})".format(cim_filename))
+            ui.log.updateBackgroundState("正在解包贴图 ({})".format(cim_filename))
             cims[page] = Texture(os.path.join(corePath, 'library', cim_filename))
         
         try:
