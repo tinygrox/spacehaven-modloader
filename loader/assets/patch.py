@@ -152,7 +152,7 @@ def doPatches(coreLib, modLib, mod:dict):
         }
 
         # Replace Config Variables with user chosen value.
-        if mod.variables:
+        if mod.variables and (pType != "Remove" and pType != "AttributeRemove"):
             for var in mod.variables:
                 patchArgs["value"].text = patchArgs["value"].text.replace( str(var.name), str(var.value) )
             
